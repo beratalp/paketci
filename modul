@@ -1,0 +1,43 @@
+# -*- coding:utf-8 -*-
+#!/usr/bin/env python
+
+
+def modulerror():
+    print "Temel modül bulunamadı!, Lütfen python kurulumunuzu test edin."
+print "Paketçi modül kurulumu"
+print "Modüller tek tek denetlenecek ve yoksa kurulacak"
+print "Bu programın arayüzü yoktur."
+print "Paketçi PreAlpha3"
+
+print "Modül os denetleniyor"
+try:
+    import os
+except ImportError:
+    modulerror()
+
+print "Modül sys denetleniyor"
+try:
+    import sys
+except ImportError:
+    modulerror()
+
+print "Modül Tkinter ve yardımcı araçları denetleniyor..."
+
+try:
+    import Tkinter
+    import tkMessageBox
+
+except:
+    print "Tkinter sisteminizde bulunamadı. Lütfen Tkinter ile ilgili paketi yükleyin"
+
+
+print "ImageTk denetleniyor..."
+
+try:
+    import ImageTk
+except:
+    print "ImageTk sisteminizde bulunamadı"
+    soru  = raw_input("Kurulsun mu: ")
+    if soru == "evet":
+        print "Kurulum başlatılıyor"
+        

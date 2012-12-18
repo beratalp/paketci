@@ -1,0 +1,10 @@
+Paketçi yardım dosyası
+
+Paketçi, DEB ve RPM paketlerini diğer linux dağıtımlarına kurmayı hedefleyen bir projedir.
+
+DEB paketi kurmak için, "paketci debian [paket adı]
+RPM paketi kurmak içini "paketci redhat [paket adı]
+
+Kuruluma başlamak için
+
+"./paketci_kur"

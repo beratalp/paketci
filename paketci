@@ -1,0 +1,212 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+
+import sys
+import os
+import aletkutusu as alt
+import debian
+import rpm
+import kolaykurulum as kk
+import paketci_yapilandir as pakyap
+import paketci_kaldir as kalk
+
+
+if os.name != "posix":
+	# -*- coding: cp1254 -*-
+	print "Bu program sadece Linux icindir"
+	alt.cik()
+
+
+
+if os.popen('whoami').readline()[:-1] != "root":
+        print "Paketçi root yetkileriyle çalışmalıdır..."
+        alt.cik()
+
+
+destek = {'debian':'deb', 'redhat':'rpm', 'source':'gz'}
+
+komut_dizini = alt.dizin_ne()
+
+arguman=""
+
+
+try:
+	arguman = sys.argv[1]
+	paket = sys.argv[2]
+	paket_adi = os.path.splitext(paket)[0]
+	tip = os.path.splitext(paket)[1][1:]
+
+except:
+	if arguman == "yardim":
+		print """
+Kullanım : Paketçi [dağıtım adı] [paket adı]
+Paketçi  çeşitli altyapılar ile paket kurmayı kolaylaştırmaktadır.
+Güncelleme için "paketci guncelle"
+Kaynak koddan kurulum için "paketci kaynak" yazınız.
+RPM kurulumu henüz çok geridir.
+		"""
+		
+		alt.cik()
+	if arguman == "guncelle":
+		print "Güncelleme yapılıyor"
+		alt.guncelle()
+		
+	if arguman == "kaldir":
+		kalk.start()
+		alt.cik()
+		
+	if arguman == "yapilandir":
+		pakyap.start()
+		alt.cik()
+	
+	if arguman == "kolay":
+		print "Kolay kurulum ve ayarlama modu"
+		kk.start()
+
+	if arguman == "rpmkaldir":
+		rpm.kaldir()
+                
+
+	if arguman == "destek":
+		print "Desteklenen dağıtımlar ve paketler: " + ", ".join(["%s:%s" % (k,v) for k,v in destek.items()])
+		alt.cik()
+		
+	if arguman == "karikatur":
+		 import antigravity
+		 print "İyi eğlenceler..."
+		 alt.cik()
+		 
+	if arguman == "hakkinda":
+	  print """
+Paketçi python ile yazılmış olan, GNU/Linux altında paket kurmayı kolaylaştıran bir sistemdir
+Şimdilik sadece RPM ve Deb paketlerini kurabilmektedir.
+Çok yakında pacman desteği de gelecektir
+Berat Alp Erbil
+Bu program GPLv2 lisansı ile lisanslanmıştır
+Site = http://code.google.com/p/paketci
+	  """
+	  alt.cik()
+
+	
+	print "Hata: Geçersiz veya eksik argüman."
+	alt.cik()
+
+if paket=="kaldir":
+	sinif = globals()[arguman]
+	sinif.kaldir()
+	alt.cik()
+        
+if not alt.dosyami(paket):
+	print "\""+ paket + "\" paketi bulunamadı.\nLütfen doğru yazdığınızdan emin olunuz."
+	alt.cik()
+
+
+print "Dağıtım türü: " + arguman
+print "Kaynak adı: " + paket
+
+
+print "Kaynak tipi: " + tip
+
+if arguman in destek.keys():
+	if tip != destek[arguman]:
+		print tip + " paketleri henüz desteklenmemektedir\nDesteklenen dağıtımların ve paketlerin bir listesi için \"paketci --destek\" komutunu kullanabilirsiniz."
+		alt.cik()
+else:
+	print "\""+ arguman + "\" dağıtımı henüz desteklenmemektedir\nDesteklenen dağıtımların bir listesi için \"paketci --destek\" komutunu kullanabilirsiniz."
+	alt.cik()
+
+
+
+
+alt.yap("echo -e '\E[0;32m'\"\033[1mPaketçi Prealpha2 Kararsız Sürüm\033[0m\"")
+alt.yap("echo -e '\E[0;32m'\"\033[1m------------------------\033[0m\"")
+print "ÖNEMLİ! OKUMADAN GEÇMEYİN!"
+print "Paketçi Prealpha2, kararlı değilidir. Oluşabilecek hatalardan Paketçi sorumlu değildir."
+alt.yap("echo -e '\E[0;32m'\"\033[1m------------------------\033[0m\"")
+oku = raw_input("Okuyunca \"e\" yazarak devam edebilirsiniz: ")
+
+if oku != "e":
+	print "Kurulum iptal edildi.\nPaketçi sonlandırıldı."
+	alt.cik()
+package = raw_input("Kuracağınız paketin adı: ")
+os.chdir("/usr/share/paketci")
+yap = open("yapilandir.txt", "r")
+yap2 = open("kur.txt", "r")
+	
+print "Kuracağınız paketin kendi deponuzda aranmasını ister misiniz?"
+depo = raw_input("Cevap: ")
+if depo == "evet":
+	print "Bulunan sonuçlar aşağıda listelenecektir"
+	komut = yap.readline()
+	os.system("%s %s" %(komut, package))
+	bulsoru = raw_input("Aradığınız paketi buldunuz mu: ")
+	if bulsoru == "evet":
+		installsoru = raw_input("Paket kurulsun mu: ")
+		if installsoru == "evet":
+			print "Paket kuruluyor"
+			komut2 = yap2.readline()
+			os.system("%s %s" %(komut2, package))
+			print "Paket kuruldu"
+			alt.cik()
+		if installsoru == "hayır":
+			pass
+	if bulsoru == "hayır":
+		pass
+if depo == "hayır":
+  pass
+if arguman == "source":
+	kuradi = raw_input("Program ad ve sürümü[Paketin içindeki klasörün adı]: ")
+	print "Kaynak kod kurulumu başlıyor..."
+	alt.yap("tar xzvf %s --directory=/usr/share/paketci/src/gecici" %(paket))
+	print "Kodlar açıldı"
+	os.chdir("/usr/share/paketci/src/gecici")
+	alt.yap("cd %s* && ./configure && make && make install" %(kuradi))
+	alt.yap("echo -e '\E[0;31m'\"\033[1mKaynaktan kurulum başarıyla tamamlandı.\033[0m\"")
+	alt.cik()
+
+if arguman == "redhat":
+	print "Paketçi başlatılıyor"
+	print "RPM paketi kuruluyor..."
+	print "Sistem güvenliği nedeniyle usr, lib ve opt dizini dışındaki dizinlere kurulum yapılamamaktadır"
+	print "Paket açlılıyor..."
+	os.chdir("/usr/share/paketci/rpm/gecici")
+	os.system("rpmextract %s" %(paket))
+	os.system("mkdir usr")
+	os.system("mkdir lib")
+	os.system("mkdir opt")
+	print "/usr dizinine kopyalanıyor..."
+	os.system("cp -apR /usr/share/paketci/rpm/gecici/usr /usr")
+	print "/lib dizinine kopyalanıyor..."
+	os.system("cp -apR /usr/share/paketci/rpm/gecici/lib /lib")
+	print "/opt dizinine kopyalanıyor"
+	os.system("cp -apR /usr/share/paketci/rpm/gecici/opt /opt")
+	print "Geçici dosyalar temizleniyor..."
+	os.system("rm -rf /usr/share/paketci/rpm/gecici/usr")
+	os.system("rm -rf /usr/share/paketci/rpm/gecici/lib")
+	os.system("rm -rf /usr/share/paketci/rpm/gecici/opt")
+	print "-------------------------------------"
+	print "Kopyalama işlemi başarıyla tamamlandı"
+	print "-------------------------------------"
+	print "Paket kaydediliyor..."
+	kayit = open("/usr/share/paketci/rpm/kayit/liste.txt","a")
+	kayit.write("%s" %(package))
+	kayit.write("\t")
+	print alt.yap("echo -e '\E[0;32m'\"\033[1mRPM kurulumu başarıyla tamamlandı.\033[0m\"")
+	alt.cik()
+
+
+   
+
+if arguman == "debian":
+		debian.ac(paket_adi,komut_dizini)
+		alt.yap("echo -e '\E[0;32m'\"\033[1mPaket Açıldı\033[0m\"")
+		debian.bag_test(paket_adi)
+		alt.yap("echo -e '\E[0;32m'\"\033[1mBağımlılıklar kontrol edildi.\033[0m\"")
+		debian.kur(paket_adi) 
+		alt.yap("echo -e '\E[0;32m'\"\033[1mKurulum başarıyla tamamlandı.\033[0m\"")
+		print "Kontrol işlemine geçiliyor"
+		debian.kontrol(paket_adi)
+		alt.yap("echo -e '\E[0;32m'\"\033[1mDeb paketi kurulumu başarıyla tamamlandı.\033[0m\"")
+
+		

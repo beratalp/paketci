@@ -1,0 +1,147 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+import sys
+import os
+import aletkutusu as alt
+import debian
+import time
+
+if os.name == "posix":
+  pass
+if os.name == "nt":
+  print "Windows kullanıcıları Paketçi' yi kullanamazlar."
+  alt.cik()
+if os.name == "mac":
+  print "Macintosh kullanıcıları Paketçi' yi kullanamazlar."
+  alt.cik()
+
+if os.popen('whoami').readline()[:-1] != "root":
+	print "Paketçi kurulumunu lütfen root olarak yapınız"
+	sys.exit()
+	
+
+ana_dizin = os.getcwd()
+
+
+os.system("echo -e '\E[0;31m'\"\033[1m------------------------\033[0m\"")
+os.system("echo -e '\E[0;32m'\"\033[1mPaketçi Prealpha2.0.1\033[0m\"")
+os.system("echo -e '\E[0;32m'\"\033[1mBerat Alp Erbil 2012\033[0m\"")
+os.system("echo -e '\E[0;31m'\"\033[1m------------------------\033[0m\"")
+print "Lütfen dikkat! Bu program geliştirme sürecinin en başlarında, emekleme dönemindedir!\nTest etmek isteyenler haricinde kullanılmamalıdır!\nSistem kararlılığına zarar vermemesi için her türlü önlem alınmıştır, ancak kullanımdan doğabilecek hatalarda sistem sahibi sorumludur!\n\n"
+print "Dikkat Kararlı olmayan sürüm - Unstable Version - Lütfen bu versiyonu son kullanıcılar kullanmasın"
+onay=raw_input("Yukarıdaki uyarıya rağmen devam etmek istiyor ve GPLv2 lisansını kabul ediyorsanız \"evet\" yazıp enter'a basın: ")
+if onay == "evet":
+	pass
+else:
+	sys.exit()
+	
+	
+
+os.system("echo -e '\E[0;32m'\"\033[1mBağımlılık Listesi\033[0m\"")
+os.system("echo -e '\E[0;32m'\"\033[1mDikkat! paketçi bu bağımlılıklar olmadan çalışmaz!\033[0m\"")
+print "Wget; Güncelleme sistemi ve kurulum sırasında bsdtar'ın indirilimesinde kullanılır."
+print "Tar; Arşivlerin açılmasında kullanılır."
+bagimliliklar = raw_input("Bağımlılıkları kurdunuz mu: ")
+if bagimliliklar == "evet":
+  pass
+if bagimliliklar == "hayır":
+  print "Lütfen paketleri kurduktan sonra yeniden deneyiniz."
+  alt.cik()
+  
+print """
+Değişiklikler
+aletkutusu.py den kaynaklanan hata düzeltildi.
+
+
+Bilinen hatalar
+RPM kurarken paketin yolunu tam olarak yazmak gerekiyor.
+Güncelleme sistemi çalışmamakta.
+bsdtar kurulumundan sonra herhangi bir hata oluşursa dikkate almayın.
+
+  """
+time.sleep(5)
+# Önce eski bir kurulum var mı diye bakıyoruz.
+if os.path.isdir("/usr/share/paketci"):
+	os.system("echo -e '\E[0;32m'\"\033[1mDaha önceden kurulmuş bir Paketçi sürümü bulundu, güncelleniyor...\033[0m\"")
+else:
+	# Kurulum dizinlerini oluşturuyoruz.
+	print "\nKurulum dizinleri oluşturuluyor..."
+	os.chdir("/usr/share")
+	os.system("mkdir paketci")
+	os.chdir("/usr/share/paketci")
+	os.system("mkdir gecici")
+	os.system("mkdir kayit")
+	os.system("mkdir /usr/share/paketci/src/")
+	os.system("mkdir /usr/share/paketci/src/gecici")
+
+	# Kayıt dizini altına desteklenen dağıtımlar için birer klasör açıyoruz.
+	os.chdir("/usr/share/paketci/kayit")
+	os.system("mkdir debian")
+
+
+# Gerekli dosyaları kurulum dizinine kopyalıyoruz ve sembolik bağı oluşturuyoruz.
+os.chdir(ana_dizin)
+print "\nDosyalar kopyalanıyor..."
+os.system("cp paketci /usr/share/paketci -f")
+os.system("cp aletkutusu.py /usr/share/paketci -f")
+os.system("cp debian.py /usr/share/paketci -f")
+os.system("cp rpm.py /usr/share/paketci -f")
+os.system("cp kolaykurulum.py /usr/share/paketci -f")
+os.system("cp paketci_kaldir.py /usr/share/paketci -f")
+os.system("cp paketci_yapilandir.py /usr/share/paketci -f")
+print "-----------------------------------"
+print "RPM için gereken dosyalar kuruluyor"
+os.system("cp rpm2cpio /usr/bin -f")
+os.system("cp rpmextract /usr/bin -f")
+os.system("chmod a+x /usr/bin/rpm2cpio")
+os.system("mkdir /usr/share/paketci/rpm")
+os.system("mkdir /usr/share/paketci/rpm/gecici")
+os.system("mkdir /usr/share/paketci/rpm/kayit")
+
+
+if os.path.isfile("/usr/bin/paketci"):
+	pass
+else:
+	os.system("ln -s /usr/share/paketci/paketci /usr/bin/paketci")
+print "Paketçi kurulumu bitti, bağımlılıkların kurulmasına geçiliyor..."
+print "Bsdtar RPM paketlerinin kurulmasında kullanılır"
+if os.path.isfile("/usr/bin/bsdtar"):
+  print "Bsdtar kuruluymuş!"
+  pass
+else:
+  print "Bağımlılık bsdtar sisteminizde kurulu değil!"
+  print "Kuruluyor"
+  os.mkdir("bsdtar")
+  os.chdir("bsdtar")
+  print "Bsdtar indiriliyor..."
+  os.system("wget http://people.freebsd.org/~kientzle/libarchive/src/libarchive-2.4.11.tar.gz")
+  os.system("tar -xzvf libarchive-2.4.11.tar.gz")
+  print "Bsdtar kurulumu başlatılıyor..."
+  os.chdir("libarchive-2.4.11")
+  os.system("./configure")
+  os.system("make")
+  os.system("make install")
+  os.chdir(os.pardir)
+  os.chdir(os.pardir)
+  os.system("rm -rf bsdtar")
+  if os.path.isfile("/usr/bin/bsdtar"):
+    pass
+  else:
+    print "Kurulum bir bsdtar kurulumundaki hatadan dolayı iptal edildi"
+    os.system("echo -e '\E[0;31m'\"\033[1mLütfen bu çıktı ile hata bildirimi yapınız.\033[0m\"")
+  print "Bsdtar başarıyla kuruldu"
+print "-------------------------"
+print "Yapılandırmaya geçiliyor!"
+print "-------------------------"
+os.system("paketci yapilandir")
+print "Yapılandırma bitti"
+#Kurulum tamam, kullanıcıyı bilgilendiriyoruz.
+os.system("echo -e '\E[0;31m'\"\033[1m------------------------\033[0m\"")
+print "Kurulum tamamlandı!\npaketci' yi konsolda \"paketci\" komutuyla çalıştırabilirsiniz.\nAyrıntılı bilgi için \"paketci yardim\""
+
+
+
+
+
+
+
