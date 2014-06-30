@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 # -*- coding: utf-8 -*-
 
 import os
@@ -36,7 +36,7 @@ def start():
 	elif yapsoru == "4":
 		print "Seçtiğiniz paket yöneticisi Pacman(ArchLinux)"
 		yap.write("pacman -Ss")
-		kur.wtite("pacman -S")
+		kur.write("pacman -S")
 	elif yapsoru == "5":
                 print "Seçtiğiniz paket yöneticisi Zypper(SuSe)"
                 yap.write("zypper search")

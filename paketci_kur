@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 # -*- coding: utf-8 -*-
 import sys
 import os
@@ -24,11 +24,10 @@ ana_dizin = os.getcwd()
 
 
 os.system("echo -e '\E[0;31m'\"\033[1m------------------------\033[0m\"")
-os.system("echo -e '\E[0;32m'\"\033[1mPaketçi Prealpha2.0.1\033[0m\"")
-os.system("echo -e '\E[0;32m'\"\033[1mBerat Alp Erbil 2012\033[0m\"")
+os.system("echo -e '\E[0;32m'\"\033[1mPaketçi Prealpha2.1\033[0m\"")
+os.system("echo -e '\E[0;32m'\"\033[1mBerat Alp Erbil 2014\033[0m\"")
 os.system("echo -e '\E[0;31m'\"\033[1m------------------------\033[0m\"")
-print "Lütfen dikkat! Bu program geliştirme sürecinin en başlarında, emekleme dönemindedir!\nTest etmek isteyenler haricinde kullanılmamalıdır!\nSistem kararlılığına zarar vermemesi için her türlü önlem alınmıştır, ancak kullanımdan doğabilecek hatalarda sistem sahibi sorumludur!\n\n"
-print "Dikkat Kararlı olmayan sürüm - Unstable Version - Lütfen bu versiyonu son kullanıcılar kullanmasın"
+print "Bu uygulama henüz stabil değildir. \nTest etmek isteyenler haricinde kullanılmamalıdır!\nSistem kararlılığına zarar vermemesi için her türlü önlem alınmıştır, ancak kullanımdan doğabilecek hatalarda sistem sahibi sorumludur!\n\n"
 onay=raw_input("Yukarıdaki uyarıya rağmen devam etmek istiyor ve GPLv2 lisansını kabul ediyorsanız \"evet\" yazıp enter'a basın: ")
 if onay == "evet":
 	pass

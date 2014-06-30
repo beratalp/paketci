@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 # -*- coding: utf-8 -*-
 
 
@@ -49,8 +49,8 @@ RPM kurulumu henüz çok geridir.
 		
 		alt.cik()
 	if arguman == "guncelle":
-		print "Güncelleme yapılıyor"
-		alt.guncelle()
+		print "Güncelleme sistemi, sunucu problemlerimiz devam ettiği için devre dışıdır."
+		alt.cik()
 		
 	if arguman == "kaldir":
 		kalk.start()
@@ -71,12 +71,7 @@ RPM kurulumu henüz çok geridir.
 	if arguman == "destek":
 		print "Desteklenen dağıtımlar ve paketler: " + ", ".join(["%s:%s" % (k,v) for k,v in destek.items()])
 		alt.cik()
-		
-	if arguman == "karikatur":
-		 import antigravity
-		 print "İyi eğlenceler..."
-		 alt.cik()
-		 
+
 	if arguman == "hakkinda":
 	  print """
 Paketçi python ile yazılmış olan, GNU/Linux altında paket kurmayı kolaylaştıran bir sistemdir

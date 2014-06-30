@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 # -*- coding: utf-8 -*-
 
 
@@ -40,15 +40,15 @@ def dosyami(dosya):
 def dosyakopyala(dosya):
 	os.system("cp %s" %(dosya))
 
-def guncelle():
-        os.mkdir("guncelle")
-	os.chdir("guncelle")
-	os.system("wget http://paketci.googlecode.com/files/paketciprealpha3unstable.tar.gz")
-	os.system("tar -xzvf paketciprealpha1.5.tar.gz")
-	os.system("./paketci_kur")
-	os.system("cd .. && rm -rf guncelle")
-	os.system("echo -e '\E[0;32m'\"\033[1mPaketçi yükseltmesi tamamlandı.\033[0m\"")
-	sys.exit()
+#def guncelle():
+#        os.mkdir("guncelle")
+#	os.chdir("guncelle")
+#	os.system("wget http://paketci.googlecode.com/files/paketciprealpha3unstable.tar.gz")
+#	os.system("tar -xzvf paketciprealpha1.5.tar.gz")
+#	os.system("./paketci_kur")
+#	os.system("cd .. && rm -rf guncelle")
+#	os.system("echo -e '\E[0;32m'\"\033[1mPaketçi yükseltmesi tamamlandı.\033[0m\"")
+#	sys.exit()
 def indir(site):
         os.system("wget %s"%(site))
 	
