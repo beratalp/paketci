@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ed885f6-53b1-4a57-b7de-484d117fdc05" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rpm.py" afterPath="$PROJECT_DIR$/rpm.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="paketc.iws" />
@@ -25,11 +26,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="paketci_kur" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="paketci_kur" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/paketci_kur">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0498177" vertical-offset="0" max-vertical-offset="2520">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2520">
               <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rpm.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/rpm.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.1076555" vertical-offset="0" max-vertical-offset="836">
+              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -50,13 +61,13 @@
       <list>
         <option value="$PROJECT_DIR$/paketci" />
         <option value="$PROJECT_DIR$/start.py" />
-        <option value="$PROJECT_DIR$/rpm.py" />
         <option value="$PROJECT_DIR$/kolaykurulum.py" />
         <option value="$PROJECT_DIR$/debian.py" />
         <option value="$PROJECT_DIR$/aletkutusu.py" />
         <option value="$PROJECT_DIR$/paketci_yapilandir.py" />
         <option value="$PROJECT_DIR$/paketci_kaldir.py" />
         <option value="$PROJECT_DIR$/paketci_kur" />
+        <option value="$PROJECT_DIR$/rpm.py" />
       </list>
     </option>
   </component>
@@ -303,7 +314,11 @@
       <created>1404172945688</created>
       <updated>1404172945688</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Installation bugs has squashed, libarchive bumped to recent version.">
+      <created>1404172990146</created>
+      <updated>1404172990146</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -348,7 +363,8 @@
     </option>
     <MESSAGE value="Initial." />
     <MESSAGE value="Bumping version to 2.1, a lot of bugs has squashed." />
-    <option name="LAST_COMMIT_MESSAGE" value="Bumping version to 2.1, a lot of bugs has squashed." />
+    <MESSAGE value="Installation bugs has squashed, libarchive bumped to recent version." />
+    <option name="LAST_COMMIT_MESSAGE" value="Installation bugs has squashed, libarchive bumped to recent version." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -368,17 +384,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rpm.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="396">
-          <caret line="0" column="18" selection-start-line="0" selection-start-column="18" selection-end-line="0" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/aletkutusu.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1026">
           <caret line="0" column="18" selection-start-line="0" selection-start-column="18" selection-end-line="0" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -412,8 +422,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/paketci_kur">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0498177" vertical-offset="0" max-vertical-offset="2520">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2520">
           <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rpm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1076555" vertical-offset="0" max-vertical-offset="836">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
         </state>
       </provider>
