@@ -9,14 +9,14 @@ import time
 if os.name == "posix":
   pass
 if os.name == "nt":
-  print "Windows kullanıcıları Paketçi' yi kullanamazlar."
+  print "You can't use Paketci on Windows"
   alt.cik()
 if os.name == "mac":
-  print "Macintosh kullanıcıları Paketçi' yi kullanamazlar."
+  print "You can't use Paketci on Mac"
   alt.cik()
 
 if os.popen('whoami').readline()[:-1] != "root":
-	print "Paketçi kurulumunu lütfen root olarak yapınız"
+	print "You have to be root in order to install Paketci"
 	sys.exit()
 	
 
@@ -24,11 +24,11 @@ ana_dizin = os.getcwd()
 
 
 os.system("echo -e '\E[0;31m'\"\033[1m------------------------\033[0m\"")
-os.system("echo -e '\E[0;32m'\"\033[1mPaketçi Prealpha2.1\033[0m\"")
-os.system("echo -e '\E[0;32m'\"\033[1mBerat Alp Erbil 2014\033[0m\"")
+os.system("echo -e '\E[0;32m'\"\033[1mPaketçi Prealpha2.2\033[0m\"")
+os.system("echo -e '\E[0;32m'\"\033[1mBerat Alp Erbil 2015\033[0m\"")
 os.system("echo -e '\E[0;31m'\"\033[1m------------------------\033[0m\"")
-print "Bu uygulama henüz stabil değildir. \nTest etmek isteyenler haricinde kullanılmamalıdır!\nSistem kararlılığına zarar vermemesi için her türlü önlem alınmıştır, ancak kullanımdan doğabilecek hatalarda sistem sahibi sorumludur!\n\n"
-onay=raw_input("Yukarıdaki uyarıya rağmen devam etmek istiyor ve GPLv2 lisansını kabul ediyorsanız \"evet\" yazıp enter'a basın: ")
+print "This app is still at testing state. \nDo not install if you aren't a tester."
+onay=raw_input("If you agree GPLv2 license please enter \"yes\": ")
 if onay == "evet":
 	pass
 else:
@@ -36,32 +36,27 @@ else:
 	
 	
 
-os.system("echo -e '\E[0;32m'\"\033[1mBağımlılık Listesi\033[0m\"")
-os.system("echo -e '\E[0;32m'\"\033[1mDikkat! paketçi bu bağımlılıklar olmadan çalışmaz!\033[0m\"")
-print "Wget; Güncelleme sistemi ve kurulum sırasında bsdtar'ın indirilimesinde kullanılır."
-print "Tar; Arşivlerin açılmasında kullanılır."
-bagimliliklar = raw_input("Bağımlılıkları kurdunuz mu: ")
-if bagimliliklar == "evet":
-  pass
-if bagimliliklar == "hayır":
-  print "Lütfen paketleri kurduktan sonra yeniden deneyiniz."
-  alt.cik()
+os.system("echo -e '\E[0;32m'\"\033[1mList of Dependencies\033[0m\"")
+print "wget; for update system"
+print "tar; for extracting archives"
+print "bsdtar; for extracting packages"
+time.sleep(3)
   
 print """
-Değişiklikler
-Bugfixes, BUGFIXES!
+List of Changes
+Initial translation to English
+Basic installation process
 
-Bilinen hatalar
-RPM kurarken paketin yolunu tam olarak yazmak gerekiyor.
+Known Issues
+You have to enter the full path when installing RPM package.
 
-  """
+"""
 time.sleep(5)
 # Önce eski bir kurulum var mı diye bakıyoruz.
 if os.path.isdir("/usr/share/paketci"):
-	os.system("echo -e '\E[0;32m'\"\033[1mDaha önceden kurulmuş bir Paketçi sürümü bulundu, güncelleniyor...\033[0m\"")
+	os.system("echo -e '\E[0;32m'\"\033[1mFound an old version of Paketci, updating...\033[0m\"")
 else:
 	# Kurulum dizinlerini oluşturuyoruz.
-	print "\nKurulum dizinleri oluşturuluyor..."
 	os.chdir("/usr/share")
 	os.system("mkdir paketci")
 	os.chdir("/usr/share/paketci")
@@ -73,11 +68,12 @@ else:
 	# Kayıt dizini altına desteklenen dağıtımlar için birer klasör açıyoruz.
 	os.chdir("/usr/share/paketci/kayit")
 	os.system("mkdir debian")
+    os.system("mkdir redhat")
 
 
 # Gerekli dosyaları kurulum dizinine kopyalıyoruz ve sembolik bağı oluşturuyoruz.
 os.chdir(ana_dizin)
-print "\nDosyalar kopyalanıyor..."
+print "\nCopying files..."
 os.system("cp paketci /usr/share/paketci -f")
 os.system("cp aletkutusu.py /usr/share/paketci -f")
 os.system("cp debian.py /usr/share/paketci -f")
@@ -86,7 +82,7 @@ os.system("cp kolaykurulum.py /usr/share/paketci -f")
 os.system("cp paketci_kaldir.py /usr/share/paketci -f")
 os.system("cp paketci_yapilandir.py /usr/share/paketci -f")
 print "-----------------------------------"
-print "RPM için gereken dosyalar kuruluyor"
+print "Installing files for RPM support..."
 os.system("cp rpm2cpio /usr/bin -f")
 os.system("cp rpmextract /usr/bin -f")
 os.system("chmod a+x /usr/bin/rpm2cpio")
@@ -99,36 +95,17 @@ if os.path.isfile("/usr/bin/paketci"):
 	pass
 else:
 	os.system("ln -s /usr/share/paketci/paketci /usr/bin/paketci")
-print "Paketçi kurulumu bitti, bağımlılıkların kurulmasına geçiliyor..."
-print "Bsdtar RPM paketlerinin kurulmasında kullanılır"
-if os.path.isfile("/usr/bin/bsdtar"):
-  print "Bsdtar kuruluymuş!"
-  pass
-else:
-  print "Bağımlılık bsdtar sisteminizde kurulu değil!"
-  print "Kuruluyor"
-  os.mkdir("bsdtar")
-  os.chdir("bsdtar")
-  print "Bsdtar indiriliyor..."
-  os.system("wget http://www.libarchive.org/downloads/libarchive-3.1.2.tar.gz")
-  os.system("tar -xzvf libarchive-3.1.2.tar.gz")
-  print "Bsdtar kurulumu başlatılıyor..."
-  os.chdir("libarchive-2.4.11")
-  os.system("./configure")
-  os.system("make")
-  os.system("make install")
-  os.chdir(os.pardir)
-  os.chdir(os.pardir)
-  os.system("rm -rf bsdtar")
-  print "Bsdtar başarıyla kuruldu"
+if os.path.isfile("/usr/share/paketci/yapilandir.txt"):
+  print "Update successfully completed."
+  sys.exit()
 print "-------------------------"
-print "Yapılandırmaya geçiliyor!"
+print "Starting configuration"
 print "-------------------------"
 os.system("paketci yapilandir")
-print "Yapılandırma bitti"
+print "End of configuratiom"
 #Kurulum tamam, kullanıcıyı bilgilendiriyoruz.
 os.system("echo -e '\E[0;31m'\"\033[1m------------------------\033[0m\"")
-print "Kurulum tamamlandı!\npaketci' yi konsolda \"paketci\" komutuyla çalıştırabilirsiniz.\nAyrıntılı bilgi için \"paketci yardim\""
+print "Installation has finished!\nYou can start Paketci by typing \"paketci\" in termimal.\nNo errors were reported."
 
 
 
