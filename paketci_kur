@@ -78,7 +78,6 @@ os.system("cp paketci /usr/share/paketci -f")
 os.system("cp aletkutusu.py /usr/share/paketci -f")
 os.system("cp debian.py /usr/share/paketci -f")
 os.system("cp rpm.py /usr/share/paketci -f")
-os.system("cp kolaykurulum.py /usr/share/paketci -f")
 os.system("cp paketci_kaldir.py /usr/share/paketci -f")
 os.system("cp paketci_yapilandir.py /usr/share/paketci -f")
 print "-----------------------------------"

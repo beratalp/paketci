@@ -7,7 +7,6 @@ import os
 import aletkutusu as alt
 import debian
 import rpm
-import kolaykurulum as kk
 import paketci_yapilandir as pakyap
 import paketci_kaldir as kalk
 
@@ -59,10 +58,7 @@ RPM kurulumu henüz çok geridir.
 	if arguman == "yapilandir":
 		pakyap.start()
 		alt.cik()
-	
-	if arguman == "kolay":
-		print "Kolay kurulum ve ayarlama modu"
-		kk.start()
+
 
 	if arguman == "rpmkaldir":
 		rpm.kaldir()
